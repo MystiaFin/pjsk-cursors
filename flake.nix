@@ -18,7 +18,7 @@
       # keyed by short name and style, like "mafuyu-animated"
       shortSources = lib.importJSON ./sources.json;
 
-      # "mafuyu-animated" -> { theme = "asahina-mafuyu"; style = "animated"; }
+      # "mafuyu-animated" -> { character = "asahina-mafuyu"; style = "animated"; }
       parseKey =
         key:
         let
@@ -30,7 +30,7 @@
         else
           {
             # sets missing from names.nix keep their short name
-            theme = fullNames.${shortName} or shortName;
+            character = fullNames.${shortName} or shortName;
             style = lib.elemAt parts 1;
           };
 
@@ -39,12 +39,12 @@
         let
           set = parseKey key;
         in
-        "${set.theme}-${set.style}";
+        "${set.character}-${set.style}";
 
       # keyed by package name, like "asahina-mafuyu-animated"
       sources = lib.mapAttrs' (key: source: lib.nameValuePair (toPackageName key) source) shortSources;
 
-      themeNames = lib.unique (map (key: (parseKey key).theme) (lib.attrNames shortSources));
+      characters = lib.unique (map (key: (parseKey key).character) (lib.attrNames shortSources));
 
       buildThemes =
         pkgs: lib.mapAttrs (name: source: pkgs.callPackage ./package.nix { inherit name source; }) sources;
@@ -65,8 +65,6 @@
         themes // { default = everyTheme; }
       );
 
-      overlays.default = final: _: { pjsk-cursors = buildThemes final; };
-
-      homeManagerModules.default = import ./module.nix { inherit buildThemes themeNames; };
+      homeManagerModules.default = import ./module.nix { inherit buildThemes characters; };
     };
 }

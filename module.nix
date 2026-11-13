@@ -1,4 +1,4 @@
-{ buildThemes, themeNames }:
+{ buildThemes, characters }:
 {
   config,
   lib,
@@ -13,16 +13,16 @@ let
   cfg = config.pjsk-cursor;
 
   style = if cfg.animated then "animated" else "static";
-  package = (buildThemes pkgs)."${cfg.theme}-${style}";
+  package = (buildThemes pkgs)."${cfg.character}-${style}";
 in
 {
   options.pjsk-cursor = {
     enable = lib.mkEnableOption "a Project SEKAI cursor theme";
 
-    theme = lib.mkOption {
-      type = lib.types.enum themeNames;
+    character = lib.mkOption {
+      type = lib.types.enum characters;
       example = "asahina-mafuyu";
-      description = "Cursor set to use: a unit (e.g. \"nightcord-at-25\") or a single character (e.g. \"asahina-mafuyu\").";
+      description = "Character whose cursors to use, e.g. \"asahina-mafuyu\" or \"hatsune-miku-nightcord-at-25\".";
     };
 
     animated = lib.mkOption {

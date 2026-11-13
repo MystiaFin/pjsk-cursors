@@ -1,6 +1,6 @@
 # pjsk-cursors
 
-The official Project SEKAI cursors from [colorfulstage.com](https://colorfulstage.com/media/download/), converted to Xcursor themes with `win2xcur`. There are 31 sets: Hatsune Miku as she appears in each of the six SEKAI, and one for each of the other 25 characters. Each comes in an animated and a static version.
+Official Project SEKAI cursors from [colorfulstage.com](https://colorfulstage.com/media/download/) for Home Manager.
 
 The cursors are fetched straight from SEGA's site at build time and are not redistributed here.
 
@@ -27,8 +27,6 @@ pjsk-cursor = {
 This sets `home.pointerCursor`, so remove any other `home.pointerCursor` definition.
 
 ## Characters
-
-Every value below works for `character`. Each has an animated and a static version.
 
 | SEKAI | Hatsune Miku | Other characters |
 | --- | --- | --- |

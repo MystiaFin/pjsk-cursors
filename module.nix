@@ -7,7 +7,7 @@
 }:
 
 let
-  # every set upstream is drawn at 32px only
+  # upstream draws everything at 32px; convert.py adds 64 and 96 copies
   NATIVE_SIZE = 32;
 
   cfg = config.pjsk-cursor;
@@ -34,7 +34,7 @@ in
     size = lib.mkOption {
       type = lib.types.int;
       default = NATIVE_SIZE;
-      description = "Cursor size in pixels. Sizes other than ${toString NATIVE_SIZE} are scaled by the compositor or toolkit, if at all.";
+      description = "Cursor size in pixels. Each theme has ${toString NATIVE_SIZE}, 64 and 96; other sizes use the closest one.";
     };
   };
 

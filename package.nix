@@ -3,6 +3,7 @@
   stdenvNoCC,
   fetchurl,
   unzip,
+  python3,
   win2xcur,
 
   # package name, like "asahina-mafuyu-animated"
@@ -188,7 +189,9 @@ stdenvNoCC.mkDerivation {
 
   nativeBuildInputs = [
     unzip
-    win2xcur
+
+    # win2xcur is packaged as an app; convert.py uses it as a library
+    (python3.withPackages (ps: [ (ps.toPythonModule win2xcur) ]))
   ];
 
   # the zip has no top-level folder, so the default unpack can't pick a source root
@@ -207,7 +210,7 @@ stdenvNoCC.mkDerivation {
     shopt -s nullglob nocaseglob
 
     mkdir xcur
-    win2xcur *.ani *.cur -o xcur
+    python3 ${./convert.py} xcur *.ani *.cur
 
     runHook postBuild
   '';

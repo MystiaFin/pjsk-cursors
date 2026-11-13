@@ -28,7 +28,7 @@ This sets `home.pointerCursor`, so remove any other `home.pointerCursor` definit
 
 ## Characters
 
-| SEKAI | Hatsune Miku | Other characters |
+| SEKAI | Hatsune Miku | Members |
 | --- | --- | --- |
 | VIRTUAL SINGER | `hatsune-miku-virtual-singer` | `kagamine-rin`, `kagamine-len`, `megurine-luka`, `meiko`, `kaito` |
 | Leo/need | `hatsune-miku-leo-need` | `hoshino-ichika`, `tenma-saki`, `mochizuki-honami`, `hinomori-shiho` |

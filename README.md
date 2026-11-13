@@ -18,7 +18,7 @@ imports = [ inputs.pjsk-cursors.homeManagerModules.default ];
 
 pjsk-cursor = {
   enable = true;
-  character = "asahina-mafuyu";
+  character = "hatsune-miku-virtual-singer";
   animated = true; # default
   size = 32;       # default
 };

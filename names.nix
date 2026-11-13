@@ -1,7 +1,7 @@
-# Short names (derived from upstream zip filenames) -> full names used for packages and the module.
-# Anything upstream adds that isn't listed here keeps its short name.
+# short name from the upstream zip filename -> full name used for packages and the module
+# a set missing here keeps its short name
 {
-  # Units
+  # units
   virtualsinger = "virtual-singer";
   leoneed = "leo-need";
   mmj = "more-more-jump";
@@ -9,7 +9,7 @@
   wxs = "wonderlands-x-showtime";
   n25 = "nightcord-at-25";
 
-  # Virtual Singer
+  # VIRTUAL SINGER
   rin = "kagamine-rin";
   len = "kagamine-len";
   luka = "megurine-luka";

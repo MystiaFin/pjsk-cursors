@@ -26,11 +26,24 @@ pjsk-cursor = {
 
 This sets `home.pointerCursor`, so remove any other `home.pointerCursor` definition.
 
+## Themes
+
+Every value below works for `theme`. Each has an animated and a static version.
+
+| Unit | Unit theme | Character themes |
+| --- | --- | --- |
+| VIRTUAL SINGER | `virtual-singer` | `kagamine-rin`, `kagamine-len`, `megurine-luka`, `meiko`, `kaito` |
+| Leo/need | `leo-need` | `hoshino-ichika`, `tenma-saki`, `mochizuki-honami`, `hinomori-shiho` |
+| MORE MORE JUMP! | `more-more-jump` | `hanasato-minori`, `kiritani-haruka`, `momoi-airi`, `hinomori-shizuku` |
+| Vivid BAD SQUAD | `vivid-bad-squad` | `azusawa-kohane`, `shiraishi-an`, `shinonome-akito`, `aoyagi-toya` |
+| Wonderlands×Showtime | `wonderlands-x-showtime` | `tenma-tsukasa`, `otori-emu`, `kusanagi-nene`, `kamishiro-rui` |
+| 25-ji, Nightcord de. | `nightcord-at-25` | `yoisaki-kanade`, `asahina-mafuyu`, `shinonome-ena`, `akiyama-mizuki` |
+
+There is no Hatsune Miku character theme because SEGA doesn't offer one.
+
 ## Packages
 
 `nix build .#<theme>-<animated|static>`, for example `.#yoisaki-kanade-static`. `.#default` builds all of them. There is also `overlays.default`, which adds `pkgs.pjsk-cursors.<name>`. Installed themes are named `pjsk-<name>`.
-
-Character themes use the character's full name, family name first, e.g. `asahina-mafuyu` (see `names.nix`). Unit themes are `virtual-singer`, `leo-need`, `more-more-jump`, `vivid-bad-squad`, `wonderlands-x-showtime` and `nightcord-at-25`.
 
 ## Updating
 

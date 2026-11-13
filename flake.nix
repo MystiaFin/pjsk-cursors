@@ -7,38 +7,66 @@
     { self, nixpkgs }:
     let
       inherit (nixpkgs) lib;
-      names = import ./names.nix;
 
-      # "mafuyu-animated" -> "asahina-mafuyu-animated"
-      rename =
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+
+      fullNames = import ./names.nix;
+
+      # keyed by short name and style, like "mafuyu-animated", as update.sh writes it
+      shortSources = lib.importJSON ./sources.json;
+
+      # "mafuyu-animated" -> { theme = "asahina-mafuyu"; style = "animated"; }
+      parseKey =
         key:
         let
-          m = builtins.match "(.*)-(animated|static)" key;
+          parts = builtins.match "(.+)-(animated|static)" key;
+          shortName = lib.elemAt parts 0;
         in
-        "${names.${lib.elemAt m 0} or (lib.elemAt m 0)}-${lib.elemAt m 1}";
-      sources = lib.mapAttrs' (key: lib.nameValuePair (rename key)) (lib.importJSON ./sources.json);
+        if parts == null then
+          throw "sources.json key \"${key}\" doesn't end in -animated or -static"
+        else
+          {
+            # sets missing from names.nix keep their short name
+            theme = fullNames.${shortName} or shortName;
+            style = lib.elemAt parts 1;
+          };
 
-      themeNames = lib.unique (map (n: lib.head (builtins.match "(.*)-(animated|static)" n)) (lib.attrNames sources));
-      themesFor = pkgs: lib.mapAttrs (name: source: pkgs.callPackage ./package.nix { inherit name source; }) sources;
-      forAllSystems = f: lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (s: f nixpkgs.legacyPackages.${s});
+      toPackageName =
+        key:
+        let
+          set = parseKey key;
+        in
+        "${set.theme}-${set.style}";
+
+      # keyed by package name, like "asahina-mafuyu-animated"
+      sources = lib.mapAttrs' (key: source: lib.nameValuePair (toPackageName key) source) shortSources;
+
+      themeNames = lib.unique (map (key: (parseKey key).theme) (lib.attrNames shortSources));
+
+      buildThemes =
+        pkgs: lib.mapAttrs (name: source: pkgs.callPackage ./package.nix { inherit name source; }) sources;
+
+      forAllSystems = f: lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
     in
     {
       packages = forAllSystems (
         pkgs:
         let
-          themes = themesFor pkgs;
-        in
-        themes
-        // {
-          default = pkgs.symlinkJoin {
+          themes = buildThemes pkgs;
+
+          everyTheme = pkgs.symlinkJoin {
             name = "pjsk-cursors";
             paths = lib.attrValues themes;
           };
-        }
+        in
+        themes // { default = everyTheme; }
       );
 
-      overlays.default = final: _: { pjsk-cursors = themesFor final; };
+      overlays.default = final: _: { pjsk-cursors = buildThemes final; };
 
-      homeManagerModules.default = import ./module.nix { inherit themesFor themeNames; };
+      homeManagerModules.default = import ./module.nix { inherit buildThemes themeNames; };
     };
 }

@@ -47,4 +47,10 @@ There is no Hatsune Miku character theme because SEGA doesn't offer one.
 
 ## Updating
 
-`./update.sh` reads the download page again and rewrites `sources.json`. A set it doesn't know yet keeps its short name until it's added to `names.nix`.
+`sources.json` pins every zip by hash. To add a set, or fix one SEGA re-uploaded, get the zip's hash:
+
+```sh
+nix store prefetch-file --name kanade-animated.zip 'https://colorfulstage.com/upload_images/media/Download/Kanade%20Cursor%20animation.zip'
+```
+
+Then put the url and hash in `sources.json` under the short name and style, like `kanade-animated`. A short name that isn't in `names.nix` is used as is.

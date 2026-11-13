@@ -15,7 +15,7 @@
 
       fullNames = import ./names.nix;
 
-      # keyed by short name and style, like "mafuyu-animated", as update.sh writes it
+      # keyed by short name and style, like "mafuyu-animated"
       shortSources = lib.importJSON ./sources.json;
 
       # "mafuyu-animated" -> { theme = "asahina-mafuyu"; style = "animated"; }
